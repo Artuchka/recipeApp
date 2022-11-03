@@ -1,0 +1,80 @@
+.recipe {
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+    padding: 1rem;
+    border-bottom: 1px solid black;
+}
+
+.recipe:last-child {
+    border-bottom: none;
+}
+
+.recipe__field {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.recipe__label {
+    font-weight: bold;
+}
+
+.recipe__label::after {
+    content: ":";
+}
+
+.recipe__property {
+    font-weight: light;
+}
+
+.recipe__instructions {
+    white-space: pre-wrap;
+    padding-left: 2rem;
+}
+
+
+.recipe__ingredient {
+    display: grid;
+    max-width: 100%;
+    grid-template-columns: repeat(2, auto);
+    padding-left: 2rem;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.buttons-container {
+    display: flex;
+    gap: 1rem;
+}
+
+.button {
+    border: none;
+    outline: none;
+    background-color: none;
+    font-size: 1rem;
+    color: white;
+    padding: .3rem .8rem;
+    border-radius: .2em;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.button--primary {
+    background-color: hsl(200 100% 50%);
+}
+
+.button--primary:hover {
+    background-color: hsl(200 100% 30%);
+}
+
+.button--danger {
+    background-color: hsl(0 100% 50%);
+}
+
+.button--danger:hover {
+    background-color: hsl(0 100% 30%);
+}
