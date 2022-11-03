@@ -4,8 +4,10 @@ import RecipeEditForm from "./components/RecipeEditForm"
 import { useState } from "react"
 import { v4 as uuidv4 } from "uuid"
 
+const APP_PREFIX = "recipeAppStorage"
+
 function App() {
-	const [recipes, setRecipes] = useState(sampleRecipes)
+	const [recipes, setRecipes] = useState(getRecipes() || sampleRecipes)
 	const [selectedData, setSelectedData] = useState(recipes[0])
 
 	function addNewRecipeHandler() {
@@ -31,6 +33,7 @@ function App() {
 				],
 			},
 		])
+		saveRecipes()
 	}
 
 	function selectEdit(id) {
@@ -39,16 +42,21 @@ function App() {
 
 	function deleteRecipeHandler(id) {
 		setRecipes(recipes.filter((rec) => rec.id !== id))
+		if (selectedData.id === id) {
+			selectEdit(recipes[0]?.id)
+		}
+		saveRecipes()
 	}
 	function editRecipeHandler(id) {
 		// openForm
 	}
-	function deleteIngredient(recId, ingId) {
+	async function deleteIngredient(recId, ingId) {
 		const index = recipes.findIndex((rec) => rec.id === recId)
 		recipes[index].ingredients = recipes[index].ingredients.filter(
 			(ing) => ing.id !== ingId
 		)
 		setRecipes([...recipes])
+		saveRecipes()
 	}
 
 	function addIngredient(recId) {
@@ -62,12 +70,14 @@ function App() {
 			},
 		]
 		setRecipes([...recipes])
+		saveRecipes()
 	}
 
 	function editHandle(id, propName, value) {
 		const index = recipes.findIndex((rec) => rec.id === id)
 		recipes[index][propName] = value
 		setRecipes([...recipes])
+		saveRecipes()
 	}
 
 	function editIngredientHandle(id, ingId, propName, value) {
@@ -77,6 +87,16 @@ function App() {
 		)
 		recipes[index]["ingredients"][ingIndex][propName] = value
 		setRecipes([...recipes])
+		saveRecipes()
+	}
+
+	function saveRecipes() {
+		localStorage.setItem(`${APP_PREFIX}_recipes`, JSON.stringify(recipes))
+		console.log("saved", recipes)
+	}
+	function getRecipes() {
+		const data = JSON.parse(localStorage.getItem(`${APP_PREFIX}_recipes`))
+		return data
 	}
 
 	return (

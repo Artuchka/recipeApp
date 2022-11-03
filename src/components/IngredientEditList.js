@@ -9,7 +9,6 @@ export default function IngredientEditList(props) {
 		recId,
 		addIngredient,
 	} = props
-	console.log(ingredients)
 	return (
 		<>
 			{ingredients.map((ing) => (
